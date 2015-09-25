@@ -1,6 +1,6 @@
 
 ##form.FormController
-这里需要了解一下form.FormController,针对angularjs这门语言，本身对表单就有对input的各种验证和状态（有效/无效/无交互/有交互），每个表单指令FormController的创建一个实例。  
+这里需要了解一下form.FormController,针对angularjs这门技术，本身对表单就有对input的各种验证和状态判断（有效/无效/无交互/有交互），每个表单指令FormController的创建一个实例。  
 
 其对应方法有：  
 
@@ -45,6 +45,6 @@
     <tt>myForm.$valid = {{myForm.$valid}}</tt><br> 
     <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br>
     <span class="error" ng-show="myForm.input.$error.required">Required!</span>
-    /*每一个form和input都会创建一个表单控制器，于是通过表单和input的[name]来输出状态，然后根据ng-show判断是否输出错误信息*/
+    /*每一个form和input都会创建一个表单控制器，它们是通过指令和ngModel了，使用表单和input的[name]的引用来输出状态，然后根据ng-show判断是否输出错误信息*/
 ```
    

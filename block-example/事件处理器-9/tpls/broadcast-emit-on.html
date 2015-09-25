@@ -1,0 +1,84 @@
+<!doctype html>
+
+<html ng-app="broadcast_emit_on">
+
+  <head>
+
+    <meta charset='utf8' />
+
+    <title>broadcast-emit-on（event事件）</title>  
+
+    <script src="lib/angular.min.js"></script>
+
+
+  </head>
+
+  <body>
+   
+   <!--嵌套controller-->
+    <div ng-controller="ParentCtrl">
+       <div ng-controller="SelfCtrl">
+         <a class="btn" ng-click="click()">click me</a>
+         <div ng-controller="ChildCtrl"></div>
+       </div>
+       <div ng-controller="BroCtrl"></div>
+    </div>
+ 
+  </body>
+
+  <script>
+      /*记住，所有事件都是写在$scope下的，向下级传送(包括自身)*/
+      // angular.module('broadcast_emit_on', ['ng'])
+      // .controller('ParentCtrl', function($scope) {
+      //      $scope.$on('to-child', function(e, d) {    //$on接受事件方法
+      //        console.log('关我毛事');
+      //      });
+      // })
+      // .controller('SelfCtrl', function($scope) {
+      //     $scope.click = function () {
+      //       $scope.$broadcast('to-child', 'haha');   //$broadcast发送事件方法（↓）
+      //       $scope.$emit('to-parent', 'hehe');       //$emit发送事件方法（↑）
+      //     }
+      // })
+      // .controller('ChildCtrl', function($scope){
+      //   $scope.$on('to-child', function(e, d) {
+      //     console.log('I\' the child, I got it', d); //d指得就是传递过来的值
+      //   });
+      // })
+      // .controller('BroCtrl', function($scope){
+      //   $scope.$on('to-child', function(e, d) {
+      //     console.log('关我毛事');
+      //   });
+      // });
+
+      /*记住，所有事件都是写在$scope下的，向上级级传送(不包括自身)*/
+      angular.module('broadcast_emit_on', ['ng'])
+      .controller('ParentCtrl', function($scope) {
+           $scope.$on('to-parent', function(e, d) {    //$on接受事件方法
+              console.log('I\' the parent, I got it', d);
+           });
+      })
+      .controller('SelfCtrl', function($scope) {
+          $scope.click = function () {
+            $scope.$broadcast('to-child', 'haha');   //$broadcast发送事件方法（↓）
+            $scope.$emit('to-parent', 'hehe');       //$emit发送事件方法（↑）
+          }
+      })
+      .controller('ChildCtrl', function($scope){
+        $scope.$on('to-parent', function(e, d) {
+         console.log('关我毛事');
+        });
+      })
+      .controller('BroCtrl', function($scope){
+        $scope.$on('to-parent', function(e, d) {
+          console.log('关我毛事');
+        });
+      });
+
+    /*实例证明对于兄弟controller始终获取不到传递过来的值*/
+
+  </script>
+
+</html>
+
+ 
