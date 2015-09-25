@@ -1,0 +1,39 @@
+<div class="panel panel-primary">
+	<div class="panel-heading">人物简介</div>
+	<div class="panel-body">
+			<div class="row">
+			  <div class="col-xs-4">
+			    <div class="thumbnail col-xs-12">
+			      <img ng-src="{{main_image}}" alt="">
+			    </div>
+			    <!--添加事件处理器的demo-->
+			    <div ng-repeat="imgurl in people.images" class="thumbnail col-xs-3">
+			      <img ng-src="{{imgurl}}" ng-click="setImage(imgurl);" alt="">
+			    </div>			    
+			  </div>
+			  <div class="col-xs-8">
+			  		<table class="table">
+			  		    <tr><td colspan="3">{{people.gaikuang.name}}</td> </tr>
+			  			<tr>
+			  				<td>个人背景</td>
+			  				<td>职业：{{people.beijing}}</td>
+			  				<td>毕业院校：{{people.school}}</td>
+			  			</tr>
+			  			<tr>
+			  				<td>个人概况</td>
+			  				<td>中文名：{{people.gaikuang.name}} <br> 别名：{{people.gaikuang.n_name}} <br> 民族：{{people.gaikuang.zuji}} <br> 出生日期：{{people.gaikuang.birth}}</td>
+			  				<td>外文名：{{people.gaikuang.y_name}} <br> 国籍：{{people.gaikuang.form}} <br> 出生地：{{people.gaikuang.birth_d}}</td>
+			  			</tr>
+			  			<tr>
+			  				<td>其他信息</td>
+			  				<td>  籍贯：{{people.others.jiguan}} <br>   血型：{{people.others.xuexing}}</td>
+			  				<td>  学历：{{people.others.xueli}}  <br> 妻子：{{people.others.wife}}  <br>   星座：{{people.others.xingzuo}}</td>
+			  			</tr>
+			  			<tr><td colspan="3">{{people.jian_intro}}</td></tr>
+			  		</table>
+			  </div>	
+			</div>
+	</div>
+	<div class="panel-footer">{{people.intro}}</div>
+</div>
+

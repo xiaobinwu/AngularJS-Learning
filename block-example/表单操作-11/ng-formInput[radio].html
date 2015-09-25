@@ -1,0 +1,57 @@
+<!doctype html>
+<html ng-app='radioExample'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
+		<style>
+		 .my-form {
+		   -webkit-transition:all linear 0.5s;
+		   transition:all linear 0.5s;
+		   background: transparent;
+		 }
+		 .my-form.ng-invalid {
+		   background: red;
+		 }
+		</style>
+
+<script>
+  angular.module('radioExample', [])
+    .controller('ExampleController', ['$scope', function($scope) {
+       $scope.color = 'blue';
+       $scope.specialValue = {
+        "id": "12345",
+        "value": "green"
+      };
+    }]);
+</script>
+
+    </head>
+    <body>	
+			<form name="myForm" ng-controller="ExampleController">
+			  <input type="radio" ng-model="color" value="red">  Red <br/>
+			  <input type="radio" ng-model="color" ng-value="specialValue"> Green <br/> 
+			  <input type="radio" ng-model="color" value="blue"> Blue <br/>
+			  <tt>color = {{color | json}}</tt><br/>
+			 </form>
+			 Note that `ng-value="specialValue"` sets radio item's value to be the value of `$scope.specialValue`.
+			 <!--这里的ng-value是使该选项的value是我们所期望获得的，实际就是等价于value="$scope.specialValue"-->
+    </body>
+</html>
+
+<!-- <input type="number"
+       ng-model=""
+       [name=""]
+       [min=""]
+       [max=""]
+       [required=""]
+       [ng-required=""]
+       [ng-minlength=""]
+       [ng-maxlength=""]
+       [pattern=""]
+       [ng-pattern=""]
+       [ng-change=""]>-->
+
+
+
+
+

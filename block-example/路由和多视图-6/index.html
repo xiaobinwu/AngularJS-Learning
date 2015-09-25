@@ -1,0 +1,32 @@
+<!doctype html>
+
+<html ng-app="phonecat">
+
+  <head>
+
+  	<meta charset='utf8' />
+
+  	<title ng-bind="'Google Phone Gallery:' + query"></title>  
+
+  	<!-- <title ng-bind-template="Google Phone Gallery:{{query}}"></title> -->
+
+    <!--ng-bind与ng-bind-template的使用方式-->
+
+    <script src="lib/angular.min.js"></script>
+    <script src="lib/angular-route.js"></script>
+    <script src="app.js"></script>
+    <script src="controllers.js"></script>
+
+    <link rel="stylesheet" href="bootstrap.min.css">
+
+  </head>
+
+  <body>
+
+    <div ng-view></div>
+ 
+  </body>
+
+</html>
+
+ 

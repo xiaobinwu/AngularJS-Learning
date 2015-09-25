@@ -1,0 +1,57 @@
+<!doctype html>
+<html ng-app='weekExample'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
+		<style>
+		 .my-form {
+		   -webkit-transition:all linear 0.5s;
+		   transition:all linear 0.5s;
+		   background: transparent;
+		 }
+		 .my-form.ng-invalid {
+		   background: red;
+		 }
+		</style>
+
+<script>
+
+  angular.module('weekExample', [])
+    .controller('DateController', ['$scope', function($scope) {
+      $scope.value = new Date(2013, 0, 3);
+    }]);
+
+</script>
+
+    </head>
+    <body>	
+        <form name="myForm" ng-controller="DateController">
+          Pick a date between in 2013:
+          <input id="exampleInput" type="week" name="input" ng-model="value"
+              placeholder="YYYY-W##" min="2012-W32" max="2013-W52" required />
+          <span class="error" ng-show="myForm.input.$error.required">
+              Required!</span>
+          <span class="error" ng-show="myForm.input.$error.week">
+              Not a valid date!</span>
+          <tt>value = {{value | date: "yyyy-Www"}}</tt><br/>  <!--  2013-W02. -->
+          <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
+          <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
+          <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
+          <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
+        </form>
+    </body>
+</html>
+
+<!-- <input type="week"
+       ng-model=""
+       [name=""]
+       [min=""]
+       [max=""]
+       [required=""]
+       [ng-required=""]
+       [ng-change=""]>-->
+
+
+
+
+

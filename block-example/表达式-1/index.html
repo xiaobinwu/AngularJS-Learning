@@ -1,0 +1,30 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <meta charset='utf8'/>
+    <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div ng-controller="Cntl2" class="expressions">
+      {{hello}}
+      <br>
+      Expression:
+      <input type='text' ng-model="expr" size="80"/>
+      <button ng-click="addExp(expr)">Evaluate</button>
+      <ul>
+       <li ng-repeat="exprd in exprs">
+         [ <a href="" ng-click="removeExp($index)">X</a> ]
+         <tt>{{exprd}}</tt> => <span ng-bind="$parent.$eval(exprd)"></span>
+        </li>
+      </ul>
+    </div>
+  </body>
+</html>
+
+
+<!-- 属性表达式
+允许未定义值
+没有流程控制结构 
+过滤器
+-->

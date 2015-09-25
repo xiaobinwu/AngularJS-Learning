@@ -1,0 +1,28 @@
+<!doctype html>
+<html ng-app ng-controller="PhoneListCtrl">
+  <head>
+  	<meta charset='utf8' />
+  	<title ng-bind="'Google Phone Gallery:' + query"></title>  
+  	<!-- <title ng-bind-template="Google Phone Gallery:{{query}}"></title> -->
+    <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="example2">
+    	Select:  
+    	<select name="select" id="select" ng-model='order'>
+    		<option value="name">名字</option>
+    		<option value="age">年龄</option>
+    	</select>						
+    	Search: <input name="search" type="text" ng-model='query' />
+ 		<ul>
+ 		<!--迭代器-->
+ 		<li ng-repeat='phone in phones | filter:query | orderBy:order'>
+ 			    {{phone.name}}
+   				<p>{{phone.number}}</p>
+ 		</li>
+ 		</ul>
+    </div>
+  </body>
+</html>
+ 

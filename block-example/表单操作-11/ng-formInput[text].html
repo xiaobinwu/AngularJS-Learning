@@ -1,0 +1,59 @@
+<!doctype html>
+<html ng-app='textInputExample'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
+		<style>
+		 .my-form {
+		   -webkit-transition:all linear 0.5s;
+		   transition:all linear 0.5s;
+		   background: transparent;
+		 }
+		 .my-form.ng-invalid {
+		   background: red;
+		 }
+		</style>
+
+<script>
+  angular.module('textInputExample', [])
+    .controller('ExampleController', ['$scope', function($scope) {
+      $scope.text = 'guest';
+      $scope.word = /^\s*\w*\s*$/;
+    }]);
+</script>
+
+    </head>
+    <body>	
+      <form name="myForm" ng-controller="ExampleController">
+        Single word: <input type="text" name="input" ng-model="text"
+                            ng-pattern="word" required ng-trim="false"> <!-- 是否过滤掉空格 -->
+        <span class="error" ng-show="myForm.input.$error.required">
+          Required!</span>
+        <span class="error" ng-show="myForm.input.$error.pattern">
+          Single word only!</span>
+
+        <tt>text = {{text}}</tt><br/>
+        <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
+        <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
+        <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
+        <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
+       </form>
+    </body>
+</html>
+
+<!-- <input type="text"
+       ng-model=""
+       [name=""]
+       [required=""]
+       [ng-required=""]
+       [ng-minlength=""]
+       [ng-maxlength=""]
+       [pattern=""]
+       [ng-pattern=""]
+       [ng-change=""]
+       [ng-trim=""]>-->
+
+
+
+
+
