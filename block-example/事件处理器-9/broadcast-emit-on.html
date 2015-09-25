@@ -30,7 +30,7 @@
       // angular.module('broadcast_emit_on', ['ng'])
       // .controller('ParentCtrl', function($scope) {
       //      $scope.$on('to-child', function(e, d) {    //$on接受事件
-      //        console.log('关我毛事');
+      //        console.log('与我无关');
       //      });
       // })
       // .controller('SelfCtrl', function($scope) {
@@ -46,7 +46,7 @@
       // })
       // .controller('BroCtrl', function($scope){
       //   $scope.$on('to-child', function(e, d) {
-      //     console.log('关我毛事');
+      //     console.log('与我无关');
       //   });
       // });
 
@@ -66,12 +66,12 @@
       })
       .controller('ChildCtrl', function($scope){
         $scope.$on('to-parent', function(e, d) {
-         console.log('关我毛事');
+         console.log('与我无关');
         });
       })
       .controller('BroCtrl', function($scope){
         $scope.$on('to-parent', function(e, d) {
-          console.log('关我毛事');
+          console.log('与我无关');
         });
       });
 
