@@ -1,0 +1,88 @@
+<!doctype html>
+<html ng-app='customControl'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://libs.useso.com/js/angular.js/1.3.0-beta.9/angular.min.js"></script>
+        <script src="http://cdn.bootcss.com/ionic/1.1.0/js/angular/angular-sanitize.js"></script>
+		<script>
+			var custom = angular.module('customControl', ['ngSanitize']);
+
+			
+
+
+			//scope->view
+			custom.directive('contenteditable', ['$sce', function($sce) {
+			  return {
+			    restrict: 'A', //指定该指令是为属性类型的指令
+			    require: 'ngModel', // 引入NgModelController
+			    link: function(scope, element, attrs, ngModel) { //scope分别是指令作用的作用域，element触发指令的元素，attrs是element的属性集合，ngmodel是控制器就是引入的ngModel
+			      if (!ngModel) return;
+
+			      // View应该如何去更新
+			      ngModel.$render = function() {
+			         element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));  //$viewValue的值进行format
+			      };
+
+			      //对element的监听
+			      element.on('blur keyup change', function() {
+			        scope.$evalAsync(read); //执行read方法
+			      });
+			      read(); // 初始化
+
+			      // Write data to the model
+			      function read() {
+			        var html = element.html();
+			        // When we clear the content editable the browser leaves a <br> behind
+			        // If strip-br attribute is provided then we strip this out
+			        if ( attrs.stripBr && html == '<br>' ) {
+			          html = '';
+			        }
+			        ngModel.$setViewValue(html); //触发$render
+			      }
+			    }
+			  };
+			}]);
+			//view->scope
+             custom.directive("noxiaobin", function () {
+                 return {
+                     restrict: "A",
+                     require: "ngModel",
+                     link: function (scope, element, attrs, ngModel) {
+                         ngModel.$parsers.push(function (v) {
+ 
+                                 if (v == "xiaobin") {
+                                     ngModel.$setValidity('noxiaobin', true); //通过获取从dom过来的值，然后进行验证，使用$setValidity('noxiaobin', true);改变noxiaobin的值，然后反馈会dom
+                                     return v;
+                                 } else {
+                                     ngModel.$setValidity('noxiaobin', false);
+                                     return undefined;
+                                 }
+ 
+                         });
+                     }
+                 }
+             });			
+		</script>
+
+    </head>
+    <body>	
+		
+	<form name="myForm">
+		 <div contenteditable 
+		      name="myWidget" ng-model="userContent"
+		      strip-br="true"
+		      required>点击编辑</div>
+		  <span ng-show="myForm.myWidget.$error.required">Required!</span>
+
+		  <input type="text" name="email" ng-model="email" noxiaobin />
+		  <span ng-show="myForm.myWidget.$error.noxiaobin">Value nerver have xiaobin!</span>
+		 <hr>
+		 <textarea ng-model="userContent"></textarea>
+	</form>
+			
+ 		
+
+    </body>
+</html>
+
+
