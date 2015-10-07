@@ -1,0 +1,67 @@
+<!doctype html>
+<html ng-app='animate-css'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="angular.min.js"></script>
+        <script src="angular-animate.js"></script>
+		<script>
+			angular.module('animate-css', ['ngAnimate'])
+			.controller('songController', ['$scope', function($scope) {
+				$scope.songs=['爱你一万年','开心的马骝','北京欢迎你','笑傲江湖' ,'练习','爱情买卖','七里香' ,'死了都要爱','北京爱情故事','星星点灯','星空','豆浆和油条','神话'];
+			}]);
+		</script>
+		
+		<style>
+			li{list-style: none; }
+			body{margin: 50px; background-color: #333; color: #ccc; overflow: hidden;}
+			h3{color: #fff;}
+			.song-list.ng-enter,
+			.song-list.ng-leave,
+			.song-list.ng-move {
+			  -webkit-transition: 0.5s linear all;
+			  -moz-transition: 0.5s linear all;
+			  -o-transition: 0.5s linear all;
+			  transition: 0.5s linear all;
+			}
+
+			.song-list.ng-enter,
+			.song-list.ng-move {
+			  opacity: 0;
+			  height: 0;
+			  overflow: hidden;
+			}
+
+			.song-list.ng-move.ng-move-active,
+			.song-list.ng-enter.ng-enter-active {
+			  opacity: 1;
+			  height: 120px;
+			}
+
+			.song-list.ng-leave {
+			  opacity: 1;
+			  overflow: hidden;
+			}
+
+			.song-list.ng-leave.ng-leave-active {
+			  opacity: 0;
+			  height: 0;
+			  padding-top: 0;
+			  padding-bottom: 0;
+			}		
+		</style>
+    </head>
+    <body>	
+		
+		<div ng-controller="songController">
+			<input type="text" ng-model="search">
+			<button type="submit">Filter</button>
+			<ul>
+			<li class="song-list" ng-repeat="song in songs | filter:search">
+			{{song}}
+			</li> 
+			</ul> 				
+		</div>
+    </body>
+</html>
+
+

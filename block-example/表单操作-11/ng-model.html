@@ -19,7 +19,6 @@
 			var custom = angular.module('customControl', ['ngSanitize']);
 
 
-			//view->scope
              custom.directive("noxiaobin", function () {
                  return {
                      restrict: "A",
@@ -41,7 +40,6 @@
                  }
              });
 
-			//scope->view
 			custom.directive('contenteditable', ['$sce', function($sce) {
 			  return {
 			    restrict: 'A', //指定该指令是为属性类型的指令
@@ -49,7 +47,7 @@
 			    link: function(scope, element, attrs, ngModel) { //scope分别是指令作用的作用域，element触发指令的元素，attrs是element的属性集合，ngmodel是控制器就是引入的ngModel
 			      if (!ngModel) return;
 
-			      // View应该如何去更新
+			      // output data to the view
 			      ngModel.$render = function() {
 			         element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));  //$viewValue的值进行format
 			      };
@@ -68,8 +66,12 @@
 			        if ( attrs.stripBr && html == '<br>' ) {
 			          html = '';
 			        }
-			        ngModel.$setViewValue(html); //触发$render
+
+			        ngModel.$setViewValue(html); //获取ViewValue，设置$viewValue
 			      }
+
+					
+
 			    }
 			  };
 			}]);
