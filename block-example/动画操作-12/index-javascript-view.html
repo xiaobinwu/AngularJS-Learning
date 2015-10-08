@@ -1,0 +1,47 @@
+<!doctype html>
+<html ng-app='animate-javascript'>
+    <head>
+    	<meta charset="utf8"/>
+    	<script src="jquery.js"></script>
+        <script src="angular.min.js"></script>
+        <script src="angular-animate.js"></script>
+		<script>
+			var jav = angular.module('animate-javascript', ['ngAnimate']);
+			jav.controller('songController', ['$scope', function($scope) {
+				$scope.songs=['爱你一万年','开心的马骝','北京欢迎你','笑傲江湖' ,'练习','爱情买卖','七里香' ,'死了都要爱','北京爱情故事','星星点灯','星空','豆浆和油条','神话'];
+			}]);
+			jav.animation(".view-animation",function(){
+				  return {
+						enter: function(element, done) {
+						      element.css({
+						        opacity: 0.5,
+						        position: "relative",
+						        top: "0px",
+						        left: "-20px"
+						      })
+						      .animate({
+						        top: 0,
+						        left: 0,
+						        opacity: 1
+						        }, 1000, done);
+						    }
+				  };
+			})
+		</script>
+		
+		<style>
+			li{list-style: none; }
+			body{margin: 50px; background-color: #333; color: #ccc; overflow: hidden;}
+			h3{color: #fff;}
+		</style>
+    </head>
+    <body>	
+		<div ng-view class="view-animation">
+
+			<!--布局模板-->
+
+		</div>
+    </body>
+</html>
+
+
