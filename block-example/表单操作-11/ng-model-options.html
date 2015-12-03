@@ -1,0 +1,41 @@
+<!doctype html>
+<html ng-app='optionsExample'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://libs.useso.com/js/angular.js/1.3.0-beta.9/angular.min.js"></script>
+		<script>
+			angular.module('optionsExample', [])
+			.controller('ExampleController', ['$scope', function($scope) {
+			  $scope.user = { name: 'say', data: '' };
+
+			  $scope.cancel = function(e) {
+			    if (e.keyCode == 27) {
+			     	 $scope.userForm.userName.$rollbackViewValue();
+			    }
+			  };
+			}]);
+		</script>
+
+    </head>
+    <body>	
+		
+		<div ng-controller="ExampleController">
+		  <form name="userForm">
+		    Name:
+		    <input type="text" name="userName"
+		           ng-model="user.name"
+		           ng-model-options="{ updateOn: 'blur' ,debounce: 1000 ,getterSetter: false }"
+		           ng-keyup="cancel($event)" /><br />
+
+		    Other data:
+		    <input type="text" ng-model="user.data" /><br />
+		  </form>
+		  <pre>user.name = <span ng-bind="user.name"></span></pre>
+		</div>
+	
+ 		
+
+    </body>
+</html>
+
+

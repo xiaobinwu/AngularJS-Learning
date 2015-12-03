@@ -1,0 +1,49 @@
+<!doctype html>
+<html ng-app='cancel-update-example'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://libs.useso.com/js/angular.js/1.3.0-beta.9/angular.min.js"></script>
+		<script>
+			angular.module('cancel-update-example', [])
+
+			.controller('CancelUpdateController', ['$scope', function($scope) {
+			  $scope.resetWithCancel = function(e) {
+			    if (e.keyCode == 27) {
+			      $scope.myForm.myInput1.$rollbackViewValue();
+			      $scope.myValue = '';
+			    }
+			  };
+			  $scope.resetWithoutCancel = function(e) {
+			    if (e.keyCode == 27) {
+			      $scope.myValue = '';
+			    }
+			  };
+			}]);
+		</script>
+
+    </head>
+    <body>	
+		
+		<div ng-controller="CancelUpdateController">
+			  <p>
+			     　尝试输入每个input。当你看到这个模型只更新　　模糊的输入。
+			   </p>
+			   <p>现在看看会发生什么,如果你开始打字然后按Escape键</p>
+
+			  <form name="myForm" ng-model-options="{ updateOn: 'blur' }">
+			    <p>With $rollbackViewValue()</p>
+			    <input name="myInput1" ng-model="myValue" ng-keydown="resetWithCancel($event)"><br/>
+			    myValue: "{{ myValue }}"
+
+			    <p>Without $rollbackViewValue()</p>
+			    <input name="myInput2" ng-model="myValue" ng-keydown="resetWithoutCancel($event)"><br/>
+			    myValue: "{{ myValue }}"
+			  </form>
+		</div>
+	
+ 		
+
+    </body>
+</html>
+
+

@@ -1,0 +1,103 @@
+<!doctype html>
+<html ng-app='customControl'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://libs.useso.com/js/angular.js/1.3.0-beta.9/angular.min.js"></script>
+        <script src="http://cdn.bootcss.com/ionic/1.1.0/js/angular/angular-sanitize.js"></script>
+        <style>
+				[contenteditable] {
+				  border: 1px solid black;
+				  background-color: white;
+				  min-height: 20px;
+				}
+
+				div.ng-invalid {
+				  border: 1px solid red;
+				}
+        </style>
+		<script>
+			var custom = angular.module('customControl', ['ngSanitize']);
+
+
+             custom.directive("noxiaobin", function () {
+                 return {
+                     restrict: "A",
+                     require: "?ngModel",
+                     link: function (scope, element, attrs, ngModel) {
+                     	if (!ngModel) return;
+                         ngModel.$parsers.push(function (v) {  //传说中的验证器
+ 
+                                 if (v != "xiaobin") {
+                                     ngModel.$setValidity('noxiaobin', true); //通过获取从dom过来的值，然后进行验证，使用$setValidity('noxiaobin', true);改变noxiaobin的值，然后反馈会dom
+                                     return v;
+                                 } else {
+                                     ngModel.$setValidity('noxiaobin', false);
+                                     return undefined;
+                                 }
+ 
+                         });
+                     }
+                 }
+             });
+
+			custom.directive('contenteditable', ['$sce', function($sce) {
+			  return {
+			    restrict: 'A', //指定该指令是为属性类型的指令
+			    require: '?ngModel', // 与ngModel指令的相互交流
+			    link: function(scope, element, attrs, ngModel) { //scope分别是指令作用的作用域，element触发指令的元素，attrs是element的属性集合，ngmodel是控制器就是引入的ngModel
+			      if (!ngModel) return;
+
+			      // output data to the view
+			      ngModel.$render = function() {
+			         element.html($sce.getTrustedHtml(ngModel.$viewValue || ''));  //$viewValue的值进行format
+			      };
+
+			      //对element的监听
+			      element.on('blur keyup change', function() {
+			        scope.$evalAsync(read); //执行read方法
+			      });
+			      read(); // 初始化
+
+			      // Write data to the model
+			      function read() {
+			        var html = element.html();
+			        // When we clear the content editable the browser leaves a <br> behind
+			        // If strip-br attribute is provided then we strip this out
+			        if ( attrs.stripBr && html == '<br>' ) {
+			          html = '';
+			        }
+
+			        ngModel.$setViewValue(html); //获取ViewValue，设置$viewValue
+			      }
+
+					
+
+			    }
+			  };
+			}]);
+			
+		</script>
+
+    </head>
+    <body>	
+		
+	<form name="myForm">
+		 <div contenteditable 
+		      name="myWidget" ng-model="userContent"
+		      strip-br="true"
+		      required>点击编辑</div>
+		  <span ng-show="myForm.myWidget.$error.required">Required!</span>
+
+		  <input type="text" name="email" ng-model="email" noxiaobin />
+		  <span ng-show="myForm.email.$error.noxiaobin">Value nerver have xiaobin!</span>
+		 <hr>
+		 <textarea ng-model="userContent"></textarea>
+		 <span>{{myForm.myWidget.$error.noxiaobin}}</span>
+	</form>
+			
+ 		
+
+    </body>
+</html>
+
+

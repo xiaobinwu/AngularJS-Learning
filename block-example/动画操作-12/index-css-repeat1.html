@@ -1,0 +1,85 @@
+<!doctype html>
+<html ng-app='animate-css' ng-controller="songController">
+    <head>
+    	<meta charset="utf8"/>
+        <script src="angular.min.js"></script>
+        <script src="angular-animate.js"></script>
+		<script>
+			angular.module('animate-css', ['ngAnimate'])
+			.controller('songController', ['$scope', function($scope) {
+ 
+			}]);
+		</script>
+		
+		<style>
+				.example-animate-container {
+				  background:white;
+				  border:1px solid black;
+				  list-style:none;
+				  margin:0;
+				  padding:0 10px;
+				}
+
+				.animate-repeat {
+				  line-height:40px;
+				  list-style:none;
+				  box-sizing:border-box;
+				}
+
+				.animate-repeat.ng-move,
+				.animate-repeat.ng-enter,
+				.animate-repeat.ng-leave {
+				  -webkit-transition:all linear 0.5s;
+				  transition:all linear 0.5s;
+				}
+
+				.animate-repeat.ng-leave.ng-leave-active,
+				.animate-repeat.ng-move,
+				.animate-repeat.ng-enter {
+				  opacity:0;
+				  max-height:0;
+				}
+
+				.animate-repeat.ng-leave,
+				.animate-repeat.ng-move.ng-move-active,
+				.animate-repeat.ng-enter.ng-enter-active {
+				  opacity:1;
+				  max-height:40px;
+				}
+		</style>
+    </head>
+    <body>	
+    			<!--ngInit在这里初始化一个friend的对象数组-->
+		
+				<div ng-init="friends = [
+				  {name:'John', age:25, gender:'boy'},
+				  {name:'Jessie', age:30, gender:'girl'},
+				  {name:'Johanna', age:28, gender:'girl'},
+				  {name:'Joy', age:15, gender:'girl'},
+				  {name:'Mary', age:28, gender:'girl'},
+				  {name:'Peter', age:95, gender:'boy'},
+				  {name:'Sebastian', age:50, gender:'boy'},
+				  {name:'Erika', age:27, gender:'girl'},
+				  {name:'Patrick', age:40, gender:'boy'},
+				  {name:'Samantha', age:60, gender:'girl'}
+				]">
+
+				  我有{{friends.length}}个朋友，他们是：
+				  <input type="search" ng-model="q" placeholder="filter friends..." />
+
+				  <ul class="example-animate-container">
+				    <li class="animate-repeat" ng-repeat="friend in friends | filter:q as results">  <!--过滤结果赋值给results-->
+				      [{{$index + 1}}] {{friend.name}} 是{{friend.age}} 岁.
+				    </li>
+				    <!--这里同时也提到ngIf的使用方法-->
+				    <li class="animate-repeat" ng-if="results.length == 0">
+				      <strong>No results found...</strong>
+				    </li>
+					
+ 
+				    <li class="animate-repeat">过滤出来的结果集为{{results.length}}</li>
+				  </ul>
+				</div>
+    </body>
+</html>
+ 

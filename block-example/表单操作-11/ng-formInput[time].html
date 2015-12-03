@@ -1,0 +1,55 @@
+<!doctype html>
+<html ng-app='timeExample'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
+		<style>
+		 .my-form {
+		   -webkit-transition:all linear 0.5s;
+		   transition:all linear 0.5s;
+		   background: transparent;
+		 }
+		 .my-form.ng-invalid {
+		   background: red;
+		 }
+		</style>
+
+<script>
+  angular.module('timeExample', [])
+    .controller('DateController', ['$scope', function($scope) {
+     $scope.value = new Date(1970, 0, 1, 14, 57, 0);
+    }]);
+</script>
+
+    </head>
+    <body>	
+        <form name="myForm" ng-controller="DateController">
+           Pick a between 8am and 5pm:
+           <input type="time" id="exampleInput" name="input" ng-model="value"
+               placeholder="HH:mm:ss" min="08:00:00" max="17:00:00" required />
+           <span class="error" ng-show="myForm.input.$error.required">
+               Required!</span>
+           <span class="error" ng-show="myForm.input.$error.time">
+               Not a valid date!</span>
+           <tt>value = {{value | date: "HH:mm:ss"}}</tt><br/>
+           <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
+           <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
+           <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
+           <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
+        </form>
+    </body>
+</html>
+
+<!-- <input type="time"
+       ng-model=""
+       [name=""]
+       [min=""]
+       [max=""]
+       [required=""]
+       [ng-required=""]
+       [ng-change=""]>-->
+
+
+
+
+

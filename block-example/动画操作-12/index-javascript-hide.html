@@ -1,0 +1,79 @@
+<!doctype html>
+<html ng-app='inputExample'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="jquery.js"></script>
+        <script src="angular.min.js"></script>
+        <script src="angular-animate.js"></script>
+		<style>
+		 .my-form {
+		   -webkit-transition:all linear 0.5s;
+		   transition:all linear 0.5s;
+		   background: transparent;
+		 }
+		 .my-form.ng-invalid{
+		   background: red;
+		 }
+ 
+		</style>
+
+<script>
+   var jav =  angular.module('inputExample', []);
+     jav.controller('ExampleController', ['$scope', function($scope) {
+       $scope.user = {name: 'guest', last: 'visitor'};
+     }]);
+
+	jav.animation('.hide-animation', function () {
+	  return {
+	    addClass : function(element, className, done) {
+	      if (className === 'ng-hide') {
+	        element.animate({
+	          opacity: 0,
+	          background:'#fff'
+	        },500, done);
+	      } else {
+	        done();
+	      }
+	    },
+	    removeClass : function(element, className, done) {
+	      if (className === 'ng-hide') {
+	      element.css('opacity',0);
+	      element.animate({
+	          opacity: 1,
+	          background:"red"
+	        }, 500, done);
+	      } else {
+	        done();
+	      }
+	    }
+	  };
+	});
+
+</script>
+
+    </head>
+    <body>	
+
+		<div ng-controller="ExampleController">
+
+		  Click me: <input type="checkbox" ng-model="checked"><br/>
+ 
+ 		  <span class="hide-animation" ng-show="checked">
+		      选中</span>
+		  <span class="hide-animation" ng-hide="checked">
+		      没选中</span><br>
+
+		  </form>
+		</div>
+    </body>
+</html>
+
+ 
+
+
+
+
+
+
+
+

@@ -1,0 +1,52 @@
+<!doctype html>
+<html ng-app='checkboxExample'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
+		<style>
+		 .my-form {
+		   -webkit-transition:all linear 0.5s;
+		   transition:all linear 0.5s;
+		   background: transparent;
+		 }
+		 .my-form.ng-invalid {
+		   background: red;
+		 }
+		</style>
+
+<script>
+  angular.module('checkboxExample', [])
+    .controller('ExampleController', ['$scope', function($scope) {
+      $scope.value1 = true;
+      $scope.value2 = 'YES'
+    }]);
+</script>
+
+    </head>
+    <body>	
+		<form name="myForm" ng-controller="ExampleController">
+		  Value1: <input type="checkbox" ng-model="value1"> <br/>
+		  Value2: <input type="checkbox" ng-model="value2"
+		                 ng-true-value="'YES'" ng-false-value="'NO'"> <br/>
+		  <tt>value1 = {{value1}}</tt><br/>
+		  <tt>value2 = {{value2}}</tt><br/>
+		 </form>
+
+    </body>
+</html>
+
+<!-- <input type="checkbox"
+       ng-model=""
+       [name=""]
+       [ng-true-value=""]
+       [ng-false-value=""]
+       [ng-change=""]> -->
+
+<!--默认为true或是false，ng-true-value="'YES'" ng-false-value="'NO'"自定义选中还有未选中-->
+
+
+
+
+
+
+

@@ -1,0 +1,63 @@
+<!doctype html>
+<html ng-app='animate-css'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="angular.min.js"></script>
+        <script src="angular-animate.js"></script>
+		<script>
+			angular.module('animate-css', ['ngAnimate'])
+			.controller('songController', ['$scope', function($scope) {
+				 
+			}]);
+		</script>
+		
+		<style>
+			li{list-style: none; }
+			body{margin: 50px; background-color: #333; color: #ccc; overflow: hidden;}
+			h3{color: #fff;}
+			.animate-hide {
+			  -webkit-transition: all linear 0.5s;
+			  transition: all linear 0.5s;
+			  line-height: 20px;
+			  opacity: 1;
+			  padding: 10px;
+			  border: 1px solid black;
+			  background: white;
+			  position:relative;
+			  left:0;
+			  top:0;
+			}
+
+			.animate-hide.ng-hide {
+ 			  left:500px;
+			  opacity: 0;
+ 
+			}
+
+			.check-element {
+			  padding: 10px;
+			  border: 1px solid black;
+			  background: white;
+			}
+		</style>
+    </head>
+    <body>	
+		
+		Click me: <input type="checkbox" ng-model="checked"><br/>
+		<div>
+		  Show:
+		  <div class="check-element animate-hide" ng-show="checked">
+		    <span class="glyphicon glyphicon-thumbs-up"></span>选中
+		  </div>
+		</div>
+		<div>
+		  Hide:
+		  <div class="check-element animate-hide" ng-hide="checked">
+		    <span class="glyphicon glyphicon-thumbs-down"></span>没有选中
+		  </div>
+		</div>
+
+    </body>
+</html>
+
+

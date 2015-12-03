@@ -1,0 +1,36 @@
+
+<!--
+默认过滤器
+{{"xiaobin" | uppercase}}
+{{"XIAOBIN" | lowercase}}
+{{ 1304375948024 | date:"yyyy-MM-dd"}}
+{{ {"foo":"dddd","far":"ddddddd"} | join}}
+-->
+<h3>手机号码列表<span class="pull-right small">by {{'XIAOBIN'| lowercase }}   -{{ 1304375948024 | date:"yyyy-MM-dd" }}</span></h3>
+ <div ng-controller="phone-list-controller">
+    <form class="form-inline" style="margin:20px 0;">
+      <div class="form-group"><label for="select">帅选：</label><select name="select" id="select" ng-model='order' class="form-control" ><option value="name">名字</option><option value="age">年龄</option> </select></div> 
+      <div class="form-group"><label for="search">搜索</label><input id="search" name="search" type="text" ng-model='query' class="form-control"  /></div>
+    </form>
+
+    <!--迭代器-->
+
+    <table class="table">
+        <tr>
+          <th class="text-center">头像</th>
+          <th class="text-center">昵称</th>
+          <th class="text-center">电话号码</th>
+          <th class="text-center">年龄</th>
+          <th class="text-center">婚姻状态</th>
+        </tr>
+        <tr ng-repeat='phone in phones | filter:query | orderBy:order'>
+          <td class="text-center"><a href="#/phones/{{phone.id}}"><img ng-src="{{phone.thumb}}"  style="width:40px;height:40px;border-radius:50%;" alt="hahah"></a>  <!--添加ng-src识别绑定的数据--></td>
+          <td class="text-center">{{phone.name}}</td>
+          <td class="text-center">{{phone.number}}</td>
+          <td class="text-center">{{phone.age}}</td>
+          <td class="text-center">{{phone.is_h | checkHun }}</td> <!--测试自定义过滤器-->
+        </tr>
+    </table>
+
+ </div>
+

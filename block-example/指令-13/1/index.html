@@ -1,0 +1,81 @@
+<!doctype html>
+<html ng-app='directiveModule'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="../jquery.js"></script>
+ 		<script src="../angular.js"></script>
+ 		<script src="../bootstrap.min.js"></script>
+ 		<link rel="stylesheet" href="../bootstrap.min.css">
+
+		<script>
+			var directive = angular.module('directiveModule', []);
+
+			//这里是验证指令的内部可以访问外部指令的作用域，这样我们在dialog.html也可以查看到遍历出来的的arrs
+			directive.controller("directiveControl",["$scope",function($scope){
+				$scope.arrs=["我是内容一","我是内容二","我是内容三"];
+				$scope.hide=false;
+			}])
+
+			//将任意可以被注入的ng服务注入到控制器中，便可以在指令中使用它了。控制器中也有一些特殊的服务可以被注入到指令当中,当然这是在应用上声明、也可以直接写在controller属性上
+			directive.controller("directiveChildControl",['$scope','$attrs','$element','$transclude',function($scope,$attrs,$element,$transclude){
+					$element.css('border', '#fff');             //改变模板dom里面的结构
+					$transclude(function (clone) {              //这是操作嵌入的作用域里面的dom
+	                 var a = angular.element('<a>');
+	                 a.attr('href', 'http://www.cnblogs.com/wuxiaobin');
+	                 a.text('我的博客原地址');
+	                 $element.find('.modal-body').append(a);
+	             });
+			}])
+
+            directive.directive("dialog", function () {
+                 return {
+                     restrict: "AE",
+                     replace: true,
+                     transclude:true, //配合ng-transclude使用，为true时，可以将原元素的内容（html、其他指令）提取到带有指令ngTransclude的元素内
+                     controller:'directiveChildControl',
+                     scope:{
+                     	title:"@" //模板也可以访问外部的作用域对象,dialog.html的{{title}}正是局部作用域访问父作用域的所产生的效果，这样可以很好实现我们的组件的设计思想，但对于@、=、&的写法有些不理解，望有更好的学习资料可以提供一下
+                     },
+                     templateUrl: 'dialog.html',
+					 link: function(scope, element, attrs, ctrl) { 
+                        console.log(element.html());
+                        element.find('.modal-title').css('color', 'red'); 
+                  }
+             }
+             });
+
+
+			
+		</script>
+
+    </head>
+    <body ng-controller="directiveControl">	
+		
+ 		<button class="btn btn-lg btn-primary " data-toggle="modal" data-target="#myModal">弹出模态框</button>
+		<dialog title=" 我是传递过来的title ">
+			<span ng-repeat="arr in arrs" ng-hide="hide">
+				{{$index}}-{{arr}} <br>
+			</span>
+			我的内容即将保存，被提取到<code>  span[ng-transclude] </code>上
+		</dialog>
+
+    </body>
+</html>
+
+<!--使用controllerAs-->
+
+<!-- 
+<div ng-controller="MainController as main">
+        <input type="text" ng-model="main.name" />
+        <span>{{ main.name }}</span>
+</div> 
+ 
+
+angular.module('myApp',[])
+.controller('MainController', function () {
+   this.name = "Halower";
+}); 
+
+controllerAs参数用来设置控制器的别名，这样就可以在视图中引用控制器甚至无需注入$scope。
+控制器的别名使路由和指令具有创建匿名控制器的强大能力。这种能力可以将动态的对象创建成为控制器，并且这个对象是隔离的、易于测试。
+-->

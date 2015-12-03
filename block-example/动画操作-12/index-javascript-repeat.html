@@ -1,0 +1,72 @@
+<!doctype html>
+<html ng-app='animate-javascript'>
+    <head>
+    	<meta charset="utf8"/>
+    	<script src="jquery.js"></script>
+        <script src="angular.min.js"></script>
+        <script src="angular-animate.js"></script>
+		<script>
+			var jav = angular.module('animate-javascript', ['ngAnimate']);
+			jav.controller('songController', ['$scope', function($scope) {
+				$scope.songs=['爱你一万年','开心的马骝','北京欢迎你','笑傲江湖' ,'练习','爱情买卖','七里香' ,'死了都要爱','北京爱情故事','星星点灯','星空','豆浆和油条','神话'];
+			}]);
+			jav.animation(".repeat-animation",function(){
+				  return {
+				    enter : function(element, done) {
+				      var width = element.width();
+				      element.css({
+				        position: 'relative',
+				        left: -10,
+				        opacity: 0
+				      });
+				      element.animate({
+				        left: 0,
+				        opacity: 1
+				      }, done);
+				    },
+				    leave : function(element, done) {
+				      element.css({
+				        position: 'relative',
+				        left: 0,
+				        opacity: 1
+				      });
+				      element.animate({
+				        left: -10,
+				        opacity: 0
+				      }, done);
+				    },
+				    move : function(element, done) {
+				      element.css({
+				        left: "2px",
+				        opacity: 0.5
+				      });
+				      element.animate({
+				        left: "0px",
+				        opacity: 1
+				      }, done);
+				    }
+				  };
+			})
+		</script>
+		
+		<style>
+			li{list-style: none; }
+			body{margin: 50px; background-color: #333; color: #ccc; overflow: hidden;}
+			h3{color: #fff;}
+		</style>
+    </head>
+    <body>	
+		
+		<div ng-controller="songController">
+			<input type="text" ng-model="search">
+			<button type="submit">Filter</button>
+			<ul>
+			<li class="song-list repeat-animation" ng-repeat="song in songs | filter:search">
+			{{song}}
+			</li> 
+			</ul> 				
+		</div>
+    </body>
+</html>
+
+

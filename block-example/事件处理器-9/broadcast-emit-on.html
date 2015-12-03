@@ -1,0 +1,84 @@
+<!doctype html>
+
+<html ng-app="TestApp">
+
+  <head>
+
+    <meta charset='utf8' />
+
+    <title>broadcast-emit-on（event事件）</title>  
+
+    <script src="lib/angular.min.js"></script>
+
+
+  </head>
+
+  <body>
+   
+   <!--嵌套controller-->
+    <div ng-controller="ParentCtrl">
+       <div ng-controller="SelfCtrl">
+         <a class="btn" ng-click="click()">click me</a>
+         <div ng-controller="ChildCtrl"></div>
+       </div>
+       <div ng-controller="BroCtrl"></div>
+    </div>
+ 
+  </body>
+
+  <script>
+      // angular.module('broadcast_emit_on', ['ng'])
+      // .controller('ParentCtrl', function($scope) {
+      //      $scope.$on('to-child', function(e, d) {    //$on接受事件
+      //        console.log('与我无关');
+      //      });
+      // })
+      // .controller('SelfCtrl', function($scope) {
+      //     $scope.click = function () {
+      //       $scope.$broadcast('to-child', 'haha');   //$broadcast发送事件（向下传递[包含自己]）
+      //       $scope.$emit('to-parent', 'hehe');        
+      //     }
+      // })
+      // .controller('ChildCtrl', function($scope){
+      //   $scope.$on('to-child', function(e, d) {
+      //     console.log('I\' the child, I got it', d);
+      //   });
+      // })
+      // .controller('BroCtrl', function($scope){
+      //   $scope.$on('to-child', function(e, d) {
+      //     console.log('与我无关');
+      //   });
+      // });
+
+
+      angular.module('TestApp', ['ng'])
+      .controller('ParentCtrl', function($scope) {
+       $scope.$on('to-parent', function(e, d) {       //$on接受事件
+          console.log('we are the parent, I got it', d);  //d指得是获得传过来的值
+          console.log(d);
+       });
+      })
+      .controller('SelfCtrl', function($scope) {
+        $scope.click = function () {
+          $scope.$broadcast('to-child', 'haha');
+          $scope.$emit('to-parent', 'hehe');         //$emit发送事件（向上传递[不包含自己]）
+        }
+      })
+      .controller('ChildCtrl', function($scope){
+        $scope.$on('to-parent', function(e, d) {
+         console.log('与我无关');
+        });
+      })
+      .controller('BroCtrl', function($scope){
+        $scope.$on('to-parent', function(e, d) {
+          console.log('与我无关');
+        });
+      });
+
+      /*可以看出来兄弟controller不管是$emit和$broadcast都收不到！！！！！*/
+
+  </script>
+
+</html>
+
+ 

@@ -1,0 +1,58 @@
+<!doctype html>
+<html ng-app='numberExample'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
+		<style>
+		 .my-form {
+		   -webkit-transition:all linear 0.5s;
+		   transition:all linear 0.5s;
+		   background: transparent;
+		 }
+		 .my-form.ng-invalid {
+		   background: red;
+		 }
+		</style>
+
+<script>
+  angular.module('numberExample', [])
+    .controller('ExampleController', ['$scope', function($scope) {
+      $scope.value = 12;
+    }]);
+</script>
+
+    </head>
+    <body>	
+		<form name="myForm" ng-controller="ExampleController">
+		  Number: <input type="number" name="input" ng-model="value"
+		                 min="0" max="99" required>
+		  <span class="error" ng-show="myForm.input.$error.required">
+		    Required!</span>
+		  <span class="error" ng-show="myForm.input.$error.number">
+		    Not valid number!</span>
+		  <tt>value = {{value}}</tt><br/>
+		  <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br/>
+		  <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br/>
+		  <tt>myForm.$valid = {{myForm.$valid}}</tt><br/>
+		  <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br/>
+		 </form>
+    </body>
+</html>
+
+<!-- <input type="number"
+       ng-model=""
+       [name=""]
+       [min=""]
+       [max=""]
+       [required=""]
+       [ng-required=""]
+       [ng-minlength=""]
+       [ng-maxlength=""]
+       [pattern=""]
+       [ng-pattern=""]
+       [ng-change=""]>-->
+
+
+
+
+

@@ -1,0 +1,75 @@
+<!doctype html>
+<html ng-app='includeExample'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="angular.min.js"></script>
+        <script src="angular-animate.js"></script>
+		<script>
+			angular.module('includeExample', ['ngAnimate'])
+			.controller('ExampleController', ['$scope', function($scope) {
+			  $scope.templates =
+			    [ { name: 'template1.html', url: 'template1.html'},
+			      { name: 'template2.html', url: 'template2.html'} ];
+			  $scope.template = $scope.templates[0];
+			}]);
+		</script>
+		
+		<style>
+		.slide-animate-container {
+		  position:relative;
+		  background:white;
+		  border:1px solid black;
+		  height:40px;
+		  overflow:hidden;
+		}
+
+		.slide-animate {
+		  padding:10px;
+		}
+
+		.slide-animate.ng-enter, .slide-animate.ng-leave {
+		  -webkit-transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+		  transition:all cubic-bezier(0.250, 0.460, 0.450, 0.940) 0.5s;
+
+		  position:absolute;
+		  top:0;
+		  left:0;
+		  right:0;
+		  bottom:0;
+		  display:block;
+		  padding:10px;
+		}
+
+		.slide-animate.ng-enter {
+		  top:-50px;
+		}
+		.slide-animate.ng-enter.ng-enter-active {
+		  top:0;
+		}
+
+		.slide-animate.ng-leave {
+		  top:0;
+		}
+		.slide-animate.ng-leave.ng-leave-active {
+		  top:50px;
+		} 
+		</style>
+    </head>
+    <body>	
+    	<!--需要上传至服务器-->
+		<div ng-controller="ExampleController">
+		  <select ng-model="template" ng-options="t.name for t in templates">  <!--对于这个ngOption之后再作解释-->
+		    
+		  </select>
+
+		  		url of the template: <tt>{{template.url}}</tt>
+		  <hr/>
+
+		  <div class="slide-animate-container">
+		    <div class="slide-animate" ng-include="template.url"></div>
+		  </div>
+
+		</div>
+    </body>
+</html>
+

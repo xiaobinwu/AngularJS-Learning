@@ -1,0 +1,15 @@
+<!doctype html>
+<html ng-app>
+  <head>
+    <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
+    <script src="script.js"></script>
+  </head>
+  <body>
+    <div class="example2" ng-controller="Cntl1">
+      Name: <input ng-model="name" type="text"/>
+      <button ng-click="greet()">Greet</button>
+    </div>
+  </body>
+</html>
+
+<!-- 属性表达式计算是发生在作用域中的。Javascript默认是以window为作用域的。AngularJS要使用window作用域的话得用$window来指向全局window对象。 比如说，你使用window中定义的alert()方法，在AngularJS表达式中必须写成$window.alert()才行。这是为了防止意外进入全局作用域（各种bug的来源）而设计的。 -->

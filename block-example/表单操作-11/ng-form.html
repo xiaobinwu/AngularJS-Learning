@@ -1,0 +1,79 @@
+<!doctype html>
+<html ng-app='formExample'>
+    <head>
+    	<meta charset="utf8"/>
+        <script src="http://code.angularjs.org/angular-1.0.1.min.js"></script>
+		<style>
+		 .my-form {
+		   -webkit-transition:all linear 0.5s;
+		   transition:all linear 0.5s;
+		   background: transparent;
+		 }
+		 .my-form.ng-invalid {
+		   background: red;
+		 }
+		</style>
+
+		<script>
+		  angular.module('formExample', [])
+		    .controller('FormController', ['$scope', function($scope) {
+		      $scope.userType = 'guest';
+		      $scope.email = '739288994@qq.com';
+
+		      var list = $scope.list = [];
+
+			  $scope.submit = function() {
+ 					if($scope.userType){ list.push(this.userType);}
+ 					if($scope.email){  list.push(this.email);}	
+ 					 // console.log(this.userType+","+this.email);
+ 					 // console.log($scope.list);
+			      };
+			 
+
+		    }]);
+		</script>
+
+    </head>
+    <body>	
+    	<!--表单控制器-->
+		<form name="myForm" ng-submit="submit()"  ng-controller="FormController" class="my-form" >
+		  userType: <input name="input" type="text" ng-model="userType" required>
+		  <span class="error" ng-show="myForm.input.$error.required">Required!</span><br>  <!--这里的意思是没有填的话就会显示-->
+
+		  email:  <input name="email" type="email"  ng-model="email">
+				<span class="error" ng-show="myForm.email.$error.email">Wrong Email!</span>
+		  <br> 
+
+		  <input type="submit" value="提交" id="submit" />
+
+
+		  <tt>userType = {{userType}}</tt><br>
+		  <tt>email = {{email}}</tt><br>
+
+		  <tt>myForm.input.$valid = {{myForm.input.$valid}}</tt><br> <!--表单的input的有效为true-->
+		  <tt>myForm.input.$error = {{myForm.input.$error}}</tt><br> <!--表单的input的$error-->
+		  <tt>myForm.email.$valid = {{myForm.email.$valid}}</tt><br> <!--表单的input的有效为true-->
+		  <tt>myForm.email.$error = {{myForm.email.$error}}</tt><br> <!--表单的input的$error-->
+		  <tt>myForm.$error.email = {{!!myForm.$error.email}}</tt><br> 
+		  <tt>myForm.$error.required = {{!!myForm.$error.required}}</tt><br>  <!--$error属性的required-->
+		  <tt>myForm.$valid = {{myForm.$valid}}</tt><br>        <!--有效效为true-->
+		  <tt>myForm.$invalid = {{myForm.$invalid}}</tt><br>    <!--无效为true-->
+		  <tt>myForm.$pristine= {{myForm.$pristine}}</tt><br>   <!--与表单有相互作用为true-->
+		  <tt>myForm.$dirty= {{myForm.$dirty}}</tt><br>   <!--与表单无相互作用为true-->
+
+		  <tt>myForm.$submitted = {{myForm.$submitted}}</tt><br>   <!--与表单无相互作用为true-->
+
+		  <tt>提交的数据：{{list|json}}</tt>
+
+		 </form>
+
+ 		
+
+    </body>
+</html>
+
+<!-- If the name attribute is specified, the form controller is published onto the current scope under this name. -->
+
+<!--表单阻止了表单默认action提交的方式，改用ng-submit或ng-click对表单进行绑定，具体操作看列子-->
+
+<!-- <form [name=""]>...</form> 等价于 <div ng-form='##'></div> 控制器为name属性的值 -->
