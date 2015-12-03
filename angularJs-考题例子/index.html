@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+  <meta charset="utf-8">
+  <title>AngularJs-考试题训练-demo1</title>
+  <script type="text/javascript" src="js/angular.min.js"></script>
+  <script type="text/javascript" src="js/controllers.js"></script>
+</head>
+<body ng-controller="textC">
+<div>
+  <span ng-repeat="a in arr">
+    {{$index+1}}/这是服务测试
+  </span>
+</div>
+<div>
+  <h3>{{question.newTitle}}</h3>
+  <label for="title">题目：</label>
+  <input type="text" id="title" ng-model="question.name" autoComplete /><br>
+  <label for="fraction">分数</label>
+  <input type="text" id="fraction" ng-model="question.fraction" fraction-num/><br>
+  <label for="type">类型：</label>
+  <select id="type" ng-model="question.type">
+    <option value="1" selected>单选</option>
+    <option value="2">多选</option>
+  </select><br>
+
+  <label for="select">选项：</label>
+  <button id="select" ng-click="addOption()" >增加选项</button>
+  <br>
+  <ul>
+    <li ng-repeat="o in question.options">
+    <b>{{$index+1}}、</b>
+    <input type="text" ng-model="o.content" value＝"o.content">
+    <a href="javascript:void(0);" ng-click="delOption($index)">删除</a>
+    </li>
+  </ul>
+  <br><hr>
+  <div>
+  <h3>{{question.previewTitle}}</h3>
+  <b> [{{question.type | typeFilter}}] {{question.name}}({{question.fraction}}分)</b>
+  <ul>
+    <li ng-repeat="o in question.options">
+      <b>{{$index+1}}、</b>
+      <input type="radio" name＝"radioCheck" ng-show="question.type==1" />
+      <input type="checkBox" name="checkboxCheck" ng-show="question.type==2" />
+      {{o.content}}
+    </li>
+  </ul>
+  </div>
+
+</div>
+
+
+
+
+</body>
+</html>
